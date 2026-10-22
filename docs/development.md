@@ -41,8 +41,8 @@ make check
 
 | Середовище | Тести | Покриття рядків і гілок |
 | --- | --- | --- |
-| macOS ARM64 | 91 пройдено | 100% |
-| Rocky Linux 10.2 ARM64 у Docker Desktop | 91 пройдено, без пропусків | 100% |
+| macOS ARM64 | 112 пройдено | 100% |
+| Rocky Linux 10.2 ARM64 у Docker Desktop | 112 пройдено, без пропусків | 100% |
 
 Ruff, Markdown і mypy також пройшли. Приклади повернули однакові словники.
 Локальні журнали — `artifacts/check.log` і `artifacts/check-rocky.log`.

@@ -32,6 +32,6 @@ set -o pipefail
 make check-rocky 2>&1 | tee artifacts/check-rocky.log
 ```
 
-Перевірено Rocky Linux 10.2 ARM64 у Docker Desktop: 91 тест пройшов,
+Перевірено Rocky Linux 10.2 ARM64 у Docker Desktop: 112 тестів пройшли,
 покриття — 100%. Це перевірка Linux-оточення в контейнері, не нативної
 інсталяції Rocky/RHEL чи SELinux enforcing.

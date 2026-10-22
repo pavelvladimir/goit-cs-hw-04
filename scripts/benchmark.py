@@ -5,8 +5,11 @@ import json
 import os
 import platform
 import statistics
+import subprocess
 import sys
 import tempfile
+from datetime import UTC, datetime
+from hashlib import sha256
 from pathlib import Path
 from time import perf_counter
 from typing import TypedDict
@@ -17,6 +20,15 @@ from search_common import SearchResults, search_sequential
 from threading_search import search_threaded
 
 KEYWORDS = ["python", "thread", "process", "паралельність", "absent-keyword"]
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE_FILES = (
+    "main.py",
+    "search_common.py",
+    "threading_search.py",
+    "multiprocessing_search.py",
+    "scripts/__init__.py",
+    "scripts/benchmark.py",
+)
 
 
 class Measurement(TypedDict):
@@ -28,6 +40,52 @@ class Measurement(TypedDict):
     seconds: list[float]
     median_seconds: float
     speedup: float
+
+
+def command_output(*command: str) -> str | None:
+    try:
+        return subprocess.run(
+            command,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=2,
+        ).stdout.strip()
+    except OSError, subprocess.SubprocessError, UnicodeError:
+        return None
+
+
+def cpu_model() -> str | None:
+    system = platform.system()
+    if system == "Darwin":
+        return command_output("sysctl", "-n", "machdep.cpu.brand_string") or None
+    if system == "Linux":
+        try:
+            for line in Path("/proc/cpuinfo").read_text(encoding="utf-8").splitlines():
+                name, _, value = line.partition(":")
+                if name.strip() in {"model name", "Hardware"} and value.strip():
+                    return value.strip()
+        except OSError, UnicodeError:
+            return None
+    return None
+
+
+def provenance(argv: list[str] | None) -> dict[str, object]:
+    status = command_output("git", "status", "--porcelain", "--untracked-files=normal")
+    return {
+        "started_at_utc": datetime.now(UTC).isoformat(),
+        "source_revision": command_output("git", "rev-parse", "HEAD"),
+        "source_dirty": None if status is None else bool(status),
+        "source_sha256": {
+            name: sha256((ROOT / name).read_bytes()).hexdigest()
+            for name in SOURCE_FILES
+        },
+        "command": list(sys.orig_argv) if argv is None else None,
+        "arguments": list(sys.argv[1:] if argv is None else argv),
+        "working_directory": str(Path.cwd()),
+        "cpu_model": cpu_model(),
+    }
 
 
 def generate_dataset(
@@ -125,6 +183,7 @@ def main(argv: list[str] | None = None) -> int:
         else [("many-small", 128, 16), ("few-large", 8, 8192)]
     )
     try:
+        metadata = provenance(argv)
         measurements: list[Measurement] = []
         with tempfile.TemporaryDirectory(prefix="goit-hw04-") as temporary:
             for name, file_count, size_kib in profiles:
@@ -139,6 +198,7 @@ def main(argv: list[str] | None = None) -> int:
                     )
                 )
         report = {
+            **metadata,
             "python": platform.python_version(),
             "platform": platform.platform(),
             "cpu_count": os.cpu_count(),
@@ -147,6 +207,11 @@ def main(argv: list[str] | None = None) -> int:
             "result_transport": "multiprocessing.Manager().Queue",
             "repeats": arguments.repeats,
             "warmups_per_configuration": 1,
+            "speedup_definition": {
+                "numerator": "sequential median_seconds for the same profile",
+                "denominator": "median_seconds of this configuration",
+                "greater_than_one": "faster than sequential",
+            },
             "measurements": measurements,
         }
         arguments.output.parent.mkdir(parents=True, exist_ok=True)

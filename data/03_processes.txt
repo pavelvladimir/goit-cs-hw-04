@@ -1,0 +1,2 @@
+Multiprocessing starts separate Python interpreters.
+Each process sends its search results through a queue.

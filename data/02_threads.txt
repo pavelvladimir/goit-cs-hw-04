@@ -1,0 +1,2 @@
+A thread can wait for a file while another thread reads a different file.
+THREADING is useful for overlapping input and output operations.

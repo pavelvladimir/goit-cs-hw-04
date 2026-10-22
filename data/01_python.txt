@@ -1,0 +1,2 @@
+Python supports several approaches to concurrent programming.
+Threads share memory within one process.

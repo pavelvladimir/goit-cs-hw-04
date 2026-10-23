@@ -1,0 +1,9 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label": "Demo", "type": "shell", "command": "make demo", "problemMatcher": []},
+    {"label": "Check", "type": "shell", "command": "make check", "problemMatcher": [], "group": "test"},
+    {"label": "Check Rocky", "type": "shell", "command": "make check-rocky", "problemMatcher": [], "group": "test"},
+    {"label": "Benchmark", "type": "shell", "command": "make benchmark", "problemMatcher": []}
+  ]
+}

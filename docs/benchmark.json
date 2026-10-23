@@ -1,0 +1,277 @@
+{
+  "started_at_utc": "2026-10-22T21:21:50.364839+00:00",
+  "source_revision": "de8c425dfd191ee9c769a750fbf82c4e3b8e830a",
+  "source_dirty": true,
+  "source_sha256": {
+    "main.py": "93bba6752d7f048d6f747d3e03f585950156024bf2e063b7056919579d42b618",
+    "search_common.py": "ff0cfb8d11d9ad545014ac96a06fe178396f088a02e8c1e52048ce7f0a002463",
+    "threading_search.py": "17de8bd36cd39e5c8b20d31c4781e1216552580c4213b8e114e2c156e2ff63af",
+    "multiprocessing_search.py": "476f9853f2b612953df1a2ab261710a384429fc9545d31d9ba6a20d11c4071c8",
+    "scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/benchmark.py": "f46fcf4f94647e9ffa9a69352c914ee8f063f06815f650c371735f88152915af"
+  },
+  "command": [
+    "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+    "-m",
+    "scripts.benchmark",
+    "--repeats",
+    "5",
+    "--workers",
+    "1",
+    "2",
+    "4",
+    "--output",
+    "artifacts/benchmark-provenance.json"
+  ],
+  "arguments": [
+    "--repeats",
+    "5",
+    "--workers",
+    "1",
+    "2",
+    "4",
+    "--output",
+    "artifacts/benchmark-provenance.json"
+  ],
+  "working_directory": "/Users/paveltravnicek/Documents/ChatGPT/goit-cs-hw-04",
+  "cpu_model": "Apple M4 Max",
+  "python": "3.14.6",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "cpu_count": 16,
+  "gil_enabled": true,
+  "start_method": "spawn",
+  "result_transport": "multiprocessing.Manager().Queue",
+  "repeats": 5,
+  "warmups_per_configuration": 1,
+  "speedup_definition": {
+    "numerator": "sequential median_seconds for the same profile",
+    "denominator": "median_seconds of this configuration",
+    "greater_than_one": "faster than sequential"
+  },
+  "measurements": [
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "sequential",
+      "workers": 1,
+      "seconds": [
+        0.01097687496803701,
+        0.01047350000590086,
+        0.011635249946266413,
+        0.010766708001028746,
+        0.010652250028215349
+      ],
+      "median_seconds": 0.010766708001028746,
+      "speedup": 1.0
+    },
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "threading",
+      "workers": 1,
+      "seconds": [
+        0.010124500025995076,
+        0.013059417018666863,
+        0.009935167036019266,
+        0.009691249986644834,
+        0.009848249959759414
+      ],
+      "median_seconds": 0.009935167036019266,
+      "speedup": 1.0836967271908753
+    },
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "threading",
+      "workers": 2,
+      "seconds": [
+        0.011902416998054832,
+        0.01237687497632578,
+        0.011605583014898002,
+        0.011517541017383337,
+        0.010881291993428022
+      ],
+      "median_seconds": 0.011605583014898002,
+      "speedup": 0.9277179773913643
+    },
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "threading",
+      "workers": 4,
+      "seconds": [
+        0.011708707956131548,
+        0.014502375037409365,
+        0.011690290994010866,
+        0.012747957953251898,
+        0.011594415991567075
+      ],
+      "median_seconds": 0.011708707956131548,
+      "speedup": 0.9195470620129781
+    },
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "multiprocessing",
+      "workers": 1,
+      "seconds": [
+        0.15056837495649233,
+        0.14741450001019984,
+        0.1489859580178745,
+        0.14964783395407721,
+        0.14881004096241668
+      ],
+      "median_seconds": 0.1489859580178745,
+      "speedup": 0.07226659575352072
+    },
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "multiprocessing",
+      "workers": 2,
+      "seconds": [
+        0.14813550002872944,
+        0.14193766698008403,
+        0.1438602500129491,
+        0.14206862496212125,
+        0.141011375002563
+      ],
+      "median_seconds": 0.14206862496212125,
+      "speedup": 0.07578526225547265
+    },
+    {
+      "profile": "many-small",
+      "files": 128,
+      "bytes": 2097152,
+      "mode": "multiprocessing",
+      "workers": 4,
+      "seconds": [
+        0.19327170797623694,
+        0.14566199999535456,
+        0.15282541699707508,
+        0.14769058400997892,
+        0.14113854098832235
+      ],
+      "median_seconds": 0.14769058400997892,
+      "speedup": 0.07290043622754772
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "sequential",
+      "workers": 1,
+      "seconds": [
+        0.14765708398772404,
+        0.15421416703611612,
+        0.15588479198049754,
+        0.1506253330153413,
+        0.14648866700008512
+      ],
+      "median_seconds": 0.1506253330153413,
+      "speedup": 1.0
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "threading",
+      "workers": 1,
+      "seconds": [
+        0.15065754199167714,
+        0.15167891699820757,
+        0.1639463750179857,
+        0.14751562499441206,
+        0.14970729203196242
+      ],
+      "median_seconds": 0.15065754199167714,
+      "speedup": 0.9997862106608801
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "threading",
+      "workers": 2,
+      "seconds": [
+        0.16087166697252542,
+        0.17068120901240036,
+        0.16401829198002815,
+        0.1483005409827456,
+        0.166725791990757
+      ],
+      "median_seconds": 0.16401829198002815,
+      "speedup": 0.9183447236097444
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "threading",
+      "workers": 4,
+      "seconds": [
+        0.16701733297668397,
+        0.15476637496612966,
+        0.1648230419959873,
+        0.1713744580047205,
+        0.1699008330469951
+      ],
+      "median_seconds": 0.16701733297668397,
+      "speedup": 0.9018544981577988
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "multiprocessing",
+      "workers": 1,
+      "seconds": [
+        0.31142004096182063,
+        0.2819197499775328,
+        0.30264374997932464,
+        0.31241241603856906,
+        0.28861195902572945
+      ],
+      "median_seconds": 0.30264374997932464,
+      "speedup": 0.4976984756025241
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "multiprocessing",
+      "workers": 2,
+      "seconds": [
+        0.22294241603231058,
+        0.2167179579846561,
+        0.2192999579710886,
+        0.21481712500099093,
+        0.2153225830406882
+      ],
+      "median_seconds": 0.2167179579846561,
+      "speedup": 0.6950293109812606
+    },
+    {
+      "profile": "few-large",
+      "files": 8,
+      "bytes": 67108864,
+      "mode": "multiprocessing",
+      "workers": 4,
+      "seconds": [
+        0.18830595799954608,
+        0.1826485840138048,
+        0.1876734170364216,
+        0.18286954099312425,
+        0.18158104200847447
+      ],
+      "median_seconds": 0.18286954099312425,
+      "speedup": 0.8236764427653084
+    }
+  ]
+}
